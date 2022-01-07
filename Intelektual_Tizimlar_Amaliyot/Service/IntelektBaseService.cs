@@ -56,5 +56,17 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
             }
             return false;
         }
+
+        public async Task<ResponceViewModel> GetAtributesAsync(int skip, int take)
+        {
+            var atributes = await _dB.Atributes.AsNoTracking().Skip(skip).Take(take).AsQueryable().ToListAsync();
+            return new ResponceViewModel { IsSuccess = true, Data = atributes, Message = "success" };
+        }
+
+        public async Task<ResponceViewModel> GetConditionsAsync(int skip, int take)
+        {
+            var conditions = await _dB.Conditions.AsNoTracking().Skip(skip).Take(take).AsQueryable().ToListAsync();
+            return new ResponceViewModel { IsSuccess = true, Data = conditions, Message = "success" };
+        }
     }
 }

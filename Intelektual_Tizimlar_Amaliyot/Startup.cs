@@ -30,7 +30,13 @@ namespace Intelektual_Tizimlar_Amaliyot
         {
             services.AddControllers();
             services.AddScoped(typeof(IntelektBaseService));
-            services.AddDbContext<IntelektDB>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
+            var connectionType = Enum.Parse<DatabaseType>(Configuration.GetSection("Database").Value);
+            if (connectionType == DatabaseType.InMemory)
+            {
+                services.AddDbContext<IntelektDB>(options => options.UseInMemoryDatabase("intelekt"));
+            }
+            else
+                services.AddDbContext<IntelektDB>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

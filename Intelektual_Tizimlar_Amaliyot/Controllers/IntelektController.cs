@@ -37,5 +37,17 @@ namespace Intelektual_Tizimlar_Amaliyot.Controllers
                 return new ResponceViewModel { IsSuccess = true, Message = "success-add-data" };
             return new ResponceViewModel { IsSuccess = false, Message = "error-add-data" };
         }
+
+        [HttpGet]
+        public async Task<ResponceViewModel> GetAtributes([FromQuery]int skip = 0, int take = 10)
+        {
+            return await _intelekt.GetAtributesAsync(skip, take);
+        }
+
+        [HttpGet]
+        public async Task<ResponceViewModel> GetConditions([FromQuery]int skip = 0, int take = 10)
+        {
+            return await _intelekt.GetConditionsAsync(skip, take);
+        }
     }
 }

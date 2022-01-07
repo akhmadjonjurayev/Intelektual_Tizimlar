@@ -8,14 +8,9 @@
 <body>
     <div class="container" style="margin-top:20px">
         <div class="row border" id="form">
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
                 <label for="Atribute">Atribute</label>
-                <select value ="1" class="form-control" id="Atribute">
-                <option value="1">1</option>
-                <option value="2">1</option>
-                <option value="3">1</option>
-                <option value="4">1</option>
-                </select>
+                <select class="form-control" id="Atribute"></select>
             </div>
             <div class="col-md-2">
                 <label>Qiymat</label>
@@ -39,6 +34,10 @@
             </div>
             <div class="col-md-2" style="padding-top:35px">
                 <button type="button" class="btn-info"  onclick={AddElement("form")} style="border-radius:50%">+</button>
+            </div>-->
+            <div class="col-md-2">
+                <button class="btn btn-danger" style="padding-top:15px;border-radius:50%" type="button">-</button>
+                <button class="btn btn-info" style="padding-top:35px;border-radius:50%" type="button">+</button>
             </div>
         </div>
         <button type="button" class="btn btn-success" onclick={writeElements()} style="margin-top:10px">
@@ -47,27 +46,31 @@
     </div>
 
     <script>
-        function AddElement(id) {
-            console.log(id);
-            var parentElement = document.getElementById(id);
-            let newElement = document.createElement('div');
-            newElement.innerHTML = `<div class="col-md - 2">
-                < label for= "Atribute" > Atribute</label >
-                    <select class="form-control" id="Atribute"></select>
-                </div >
-                <div class="col-md-2">
-                    <label>Qiymat</label>
-                    <select class="form-control" id="Qiymat"></select>
-                </div>`;
-            parentElement.insertBefore(newElement, parentElement.children[parentElement.childElementCount - 1]);
-        }
+        let inputsData = [];
+        let buttonData = [];
+        let count = 0;
+        let inputsSeed = `<div class="col-md-2">
+                <label for="Atribute">Atribute</label>
+                <select class="form-control" id="Atribute"></select>
+            </div>
+            <div class="col-md-2">
+                <label>Qiymat</label>
+                <select class="form-control" id="Qiymat"></select>
+            </div>`;
+        let buttonSeed = `<div class="col-md-3" style="padding-top:35px">
+                <button type="button" class="btn-info"  onclick= "writeElements()" style="border-radius:50%">+</button>
+            </div><div class="col-md-3" style="padding-top:35px">
+                <button type="button" class="btn-info"  onclick= "writeElements()" style="border-radius:50%">+</button>
+            </div>`;
+        inputsData.push(inputsSeed);
+        writeElements();
+     
         function writeElements() {
-            let a = document.getElementsByClassName("form-control")
-            debugger
-            for (let i of a) {
-                console.log(i.value)
-            }
-           
+            inputsData.push(inputsSeed);
+            console.log(inputsData);
+            document.getElementById('form').innerHTML = inputsData.join('') + buttonSeed;
+            count++;
+            console.log(count);
         }
     </script>
 </body>

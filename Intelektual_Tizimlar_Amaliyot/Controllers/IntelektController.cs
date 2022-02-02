@@ -39,13 +39,13 @@ namespace Intelektual_Tizimlar_Amaliyot.Controllers
         }
 
         [HttpGet]
-        public async Task<ResponceViewModel> GetAtributes([FromQuery]int skip = 0, int take = 10)
+        public async Task<ResponceViewModel> GetAtributes([FromQuery]int skip = 0, int take = 20)
         {
             return await _intelekt.GetAtributesAsync(skip, take);
         }
 
         [HttpGet]
-        public async Task<ResponceViewModel> GetConditions([FromQuery]int skip = 0, int take = 10)
+        public async Task<ResponceViewModel> GetConditions([FromQuery]int skip = 0, int take = 20)
         {
             return await _intelekt.GetConditionsAsync(skip, take);
         }

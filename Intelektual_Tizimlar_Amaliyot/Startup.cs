@@ -33,7 +33,7 @@ namespace Intelektual_Tizimlar_Amaliyot
             var connectionType = Enum.Parse<DatabaseType>(Configuration.GetSection("Database").Value);
             if (connectionType == DatabaseType.InMemory)
             {
-                services.AddDbContext<IntelektDB>(options => options.UseInMemoryDatabase("intelekt"));
+                services.AddDbContext<IntelektDB>(options => options.UseInMemoryDatabase(connectionType.ToString()));
             }
             else
                 services.AddDbContext<IntelektDB>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnection")));

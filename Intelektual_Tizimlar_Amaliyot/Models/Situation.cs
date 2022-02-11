@@ -23,6 +23,8 @@ namespace Intelektual_Tizimlar_Amaliyot.Models
         [ForeignKey("Agreement")]
         public Guid AtributeId { get; set; }
 
+        public bool IsResult { get; set; }
+
         public virtual Atribute Atribute { get; set; }
 
         public virtual Condition Condition { get; set; }

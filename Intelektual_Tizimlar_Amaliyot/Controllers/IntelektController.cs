@@ -49,5 +49,11 @@ namespace Intelektual_Tizimlar_Amaliyot.Controllers
         {
             return await _intelekt.GetConditionsAsync(skip, take);
         }
+
+        [HttpPost]
+        public async Task<ResponceViewModel> CreateAgreement([FromBody] List<CreateAgreementViewModel> viewModels)
+        {
+            return await _intelekt.CreateAgreementAsync(viewModels);
+        }
     }
 }

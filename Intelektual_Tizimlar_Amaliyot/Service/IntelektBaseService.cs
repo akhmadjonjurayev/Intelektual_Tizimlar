@@ -68,5 +68,48 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
             var conditions = await _dB.Conditions.AsNoTracking().Skip(skip).Take(take).AsQueryable().ToListAsync();
             return new ResponceViewModel { IsSuccess = true, Data = conditions, Message = "success" };
         }
+
+        public async Task<ResponceViewModel> CreateAgreementAsync(List<CreateAgreementViewModel> viewModels)
+        {
+            try
+            {
+                if (viewModels == null || !viewModels.Any())
+                    return new ResponceViewModel { IsSuccess = false, Message = "error-invalid-data" };
+
+                var oldAgreement = _dB.Agreements.OrderByDescending(l => l.Sequence).FirstOrDefault();
+
+                var agreement = new Agreement()
+                {
+                    Sequence = oldAgreement == null ? 1 : oldAgreement.Sequence + 1
+                };
+
+                await _dB.Agreements.AddAsync(agreement);
+
+                int count = 0;
+
+                foreach(var item in viewModels)
+                {
+                    var situation = new Situation
+                    {
+                        AgreementId = agreement.AgreementId,
+                        ConditionId = item.ConditionId,
+                        AtributeId = item.AtributeId,
+                        Sequence = ++count,
+                        IsResult = item.Result
+                    };
+                    await _dB.Situations.AddAsync(situation);
+                }
+
+                if(await _dB.SaveChangesAsync() > 0)
+                {
+                    return new ResponceViewModel { IsSuccess = true, Message = "success-saved-data" };
+                }
+                return new ResponceViewModel { IsSuccess = false, Message = "error-saved-data" };
+            }
+            catch (Exception ex)
+            {
+                return new ResponceViewModel { Message = ex.Message, IsSuccess = false };
+            }
+        }
     }
 }

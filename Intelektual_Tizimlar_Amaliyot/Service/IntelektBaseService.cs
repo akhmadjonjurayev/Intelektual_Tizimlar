@@ -111,5 +111,31 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
                 return new ResponceViewModel { Message = ex.Message, IsSuccess = false };
             }
         }
+
+        public async Task<ResponceViewModel> GetAgreements()
+        {
+            try
+            {
+                var agreements = await _dB.Agreements.AsNoTracking().Select(l => new
+                {
+                    l.AgreementId,
+                    l.Sequence,
+                    Situations = l.Situations.Select(p => new
+                    {
+                        p.SituationId,
+                        p.Sequence,
+                        p.Condition,
+                        p.Atribute,
+                        p.IsResult
+                    }).OrderBy(r => r.Sequence)
+                }).OrderBy(l => l.Sequence)
+                    .ToListAsync();
+                return new ResponceViewModel { IsSuccess = true, Message = "success", Data = agreements };
+            }
+            catch(Exception ex)
+            {
+                return new ResponceViewModel { Message = ex.Message, IsSuccess = false };
+            }
+        }
     }
 }

@@ -61,6 +61,7 @@
         <button type="button" class="btn btn-success" onclick={CreateRule()} style="margin-top:10px">
             Saqlash
         </button>
+        <a class="btn btn-info" href="app.html">Table</a>
     </div>
 
     <script>
@@ -207,7 +208,6 @@
 
         function ChangeSelectValue(id) {
             let select = document.getElementById(id);
-            console.log(select);
             inputsData.map((inputs) => {
                 inputs.map((input) => {
                     if (input.select.id === id) {
@@ -235,8 +235,6 @@
 
             var raw = JSON.stringify(data);
 
-            console.log(raw);
-
             var requestOptions = {
                 method: 'POST',
                 headers: myHeaders,
@@ -247,11 +245,10 @@
             fetch("http://localhost:5000/api/Intelekt/CreateAgreement", requestOptions)
                 .then(response => response.json())
                 .then(result => {
-                    console.log(result);
                     if (result.isSuccess) {
-                        console.log('how are you man');
+                        alert('how are you man');
                     }
-                    else console.log('bad men');
+                    else alert('bad men');
                 })
                 .catch(error => console.log('error', error));
         }

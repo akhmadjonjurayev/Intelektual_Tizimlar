@@ -69,7 +69,7 @@
                                     <input placeholder="text..." type="text" class="form-control" id="InputForAtribute">
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="text-center text-secondary">
+                                    <h3 class="text-center text-secondary" id="result_of_attribut">
                                         Attribut mavjud emas!
                                         Ma'lumot qo'shing!
                                     </h3>
@@ -94,7 +94,7 @@
                                 <input placeholder="text..." type="text" class="form-control" id="InputForCondition">
                             </div>
                             <div class="card-body">
-                                <h3 class="text-center text-secondary">
+                                <h3 class="text-center text-secondary" id="result_of_qiymat">
                                     Qiymat mavjud emas!
                                     Ma'lumot qo'shing!
                                 </h3>
@@ -123,7 +123,6 @@
     <script>
         function AddAtribute() {
             let data = document.getElementById("InputForAtribute").value;
-            console.log(data);
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
@@ -145,6 +144,7 @@
                     if (result.isSuccess) {
                         notification.innerText = result.message;
                         notification.style.color = "green";
+                        document.getElementById("result_of_attribut").innerText = data;
                     }
                     else {
                         notification.innerText = result.message;
@@ -156,7 +156,6 @@
 
         function AddCondition() {
             let data = document.getElementById("InputForCondition").value;
-            console.log(data);
 
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
@@ -179,6 +178,7 @@
                     if (result.isSuccess) {
                         notification.innerText = result.message;
                         notification.style.color = "blue";
+                        document.getElementById("result_of_qiymat").innerText = data;
                     }
                     else {
                         notification.innerText = result.message;

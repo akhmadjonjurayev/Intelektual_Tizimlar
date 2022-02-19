@@ -3,16 +3,57 @@
 <head>
     <meta charset="utf-8" />
     <title>Intelektual Tizimlar</title>
-    <link href="bootstrap/bootstrap.css"/>
+    <link href="bootstrap/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
-
+            <table class="table border">
+                <thead class="thead-dark">
+                        <tr>
+                            <th>N</th>
+                        </tr>
+                </thead>
+                <tbody id="table_body">
+                </tbody>
+            </table>
+            <a class="btn btn-info" href="main.html">Create Situation</a>
         </div>
     </div>
     <script>
+        getAgreements();
+        function getAgreements() {
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
 
+            fetch("http://localhost:5000/api/Intelekt/GetAgreements", requestOptions)
+                .then(response => response.json())
+                .then(result => {
+                    if (result.isSuccess) {
+                        let data = [];
+                        result.data.map(agreement => {
+                            let text = "";
+                            agreement.situations.map(situation => {
+                                text += situation.condition.conditionValue + " " + situation.atribute.atributeName + ", ";
+                            });
+                            data.push(text);
+                        });
+                        CreateTableRows(data);
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                })
+                .catch(error => console.log('error', error));
+        }
+
+        function CreateTableRows(data) {
+            let rows = [];
+            data.map(row => rows.push(`<tr><td>${row}</td></tr>`));
+            document.getElementById("table_body").innerHTML = rows.join('');
+        }
     </script>
 </body>
 </html>

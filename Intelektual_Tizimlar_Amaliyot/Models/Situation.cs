@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,21 +16,24 @@ namespace Intelektual_Tizimlar_Amaliyot.Models
 
         public int Sequence { get; set; }
 
-        [ForeignKey("Atribute")]
+        [ForeignKey("Agreement")]
         public Guid AgreementId { get; set; }
 
         [ForeignKey("Condition")]
         public Guid ConditionId { get; set; }
 
-        [ForeignKey("Agreement")]
+        [ForeignKey("Atribute")]
         public Guid AtributeId { get; set; }
 
         public bool IsResult { get; set; }
 
+        [JsonIgnore]
         public virtual Atribute Atribute { get; set; }
 
+        [JsonIgnore]
         public virtual Condition Condition { get; set; }
 
+        [JsonIgnore]
         public virtual Agreement Agreement { get; set; }
     }
 }

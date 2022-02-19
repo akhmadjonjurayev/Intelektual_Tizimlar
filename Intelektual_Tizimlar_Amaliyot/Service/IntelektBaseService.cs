@@ -29,7 +29,7 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
             if (maxSequenceAtribute != null)
                 newAtribute.Sequence = ++maxSequenceAtribute.Sequence;
             else
-                newAtribute.Sequence = 0;
+                newAtribute.Sequence = 1;
             await _dB.Atributes.AddAsync(newAtribute);
             if(await _dB.SaveChangesAsync() > 0)
             {
@@ -49,6 +49,7 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
             var maxSequenceCondition = _dB.Conditions.AsNoTracking().OrderByDescending(l => l.Sequence).AsQueryable().FirstOrDefault();
             if (maxSequenceCondition != null)
                 newCondition.Sequence = ++maxSequenceCondition.Sequence;
+            else newCondition.Sequence = 1;
             await _dB.Conditions.AddAsync(newCondition);
             if (await _dB.SaveChangesAsync() > 0)
             {
@@ -122,13 +123,13 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
                     l.Sequence,
                     Situations = l.Situations.Select(p => new
                     {
-                        p.SituationId,
-                        p.Sequence,
-                        p.Condition,
-                        p.Atribute,
-                        p.IsResult
-                    }).OrderBy(r => r.Sequence)
-                }).OrderBy(l => l.Sequence)
+                        SituationId = p.SituationId,
+                        Sequence = p.Sequence,
+                        Condition = p.Condition,
+                        Atribute = p.Atribute,
+                        IsResult = p.IsResult
+                    })
+                }).OrderBy(k => k.Sequence).AsQueryable()
                     .ToListAsync();
                 return new ResponceViewModel { IsSuccess = true, Message = "success", Data = agreements };
             }

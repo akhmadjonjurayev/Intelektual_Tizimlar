@@ -96,7 +96,7 @@
                     method: 'GET',
                     redirect: 'follow'
                 };
-                fetch("http://localhost:5000/api/Intelekt/GetAtributes", requestOptions)
+                fetch(getUrl("GetAtributes"), requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         if (result.isSuccess) {
@@ -120,7 +120,7 @@
                     method: 'GET',
                     redirect: 'follow'
                 };
-                fetch("http://localhost:5000/api/Intelekt/GetConditions", requestOptions)
+                fetch(getUrl("GetConditions"), requestOptions)
                     .then(response => response.json())
                     .then(result => {
                         if (result.isSuccess) {
@@ -242,7 +242,7 @@
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:5000/api/Intelekt/CreateAgreement", requestOptions)
+            fetch(getUrl("CreateAgreement"), requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if (result.isSuccess) {
@@ -251,6 +251,12 @@
                     else alert('bad men');
                 })
                 .catch(error => console.log('error', error));
+        }
+
+        function getUrl(actionName) {
+            let host = window.location.hostname;
+            let protocol = window.location.protocol;
+            return protocol + "//" + host + "/api/Intelekt/" + actionName;
         }
     </script>
 </body>

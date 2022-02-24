@@ -75,7 +75,7 @@
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:5000/api/Intelekt/GetAgreements", requestOptions)
+            fetch(getUrl("GetAgreements"), requestOptions)
                 .then(response => response.json())
                 .then(result => {
                     if (result.isSuccess) {
@@ -108,6 +108,12 @@
             let rows = [];
             data.map(row => rows.push(`<tr><td>${row}</td></tr>`));
             document.getElementById("table_body").innerHTML = rows.join('');
+        }
+
+        function getUrl(actionName) {
+            let host = window.location.hostname;
+            let protocol = window.location.protocol;
+            return protocol + "//" + host + "/api/Intelekt/" + actionName;
         }
     </script>
 </body>

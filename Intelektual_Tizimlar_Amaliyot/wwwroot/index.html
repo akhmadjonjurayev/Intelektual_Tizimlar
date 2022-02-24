@@ -123,70 +123,76 @@
     <script>
         function AddAtribute() {
             let data = document.getElementById("InputForAtribute").value;
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({
-                "EntityValue": data
-            });
+            if (data) {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
 
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
+                var raw = JSON.stringify({
+                    "EntityValue": data
+                });
 
-            fetch("http://localhost:5000/api/Intelekt/CreateAtribute", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    let notification = document.getElementById("atribute");
-                    if (result.isSuccess) {
-                        notification.innerText = result.message;
-                        notification.style.color = "green";
-                        document.getElementById("result_of_attribut").innerText = data;
-                    }
-                    else {
-                        notification.innerText = result.message;
-                        notification.style.color = "red";
-                    }
-                })
-                .catch(error => console.log('error', error));
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
+
+                fetch("http://localhost:5000/api/Intelekt/CreateAtribute", requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        let notification = document.getElementById("atribute");
+                        if (result.isSuccess) {
+                            notification.innerText = result.message;
+                            notification.style.color = "green";
+                            document.getElementById("result_of_attribut").innerText = data;
+                            document.getElementById("InputForAtribute").value = "";
+                        }
+                        else {
+                            notification.innerText = result.message;
+                            notification.style.color = "red";
+                        }
+                    })
+                    .catch(error => console.log('error', error));
+            }
         }
 
         function AddCondition() {
             let data = document.getElementById("InputForCondition").value;
 
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+            if (data) {
+                var myHeaders = new Headers();
+                myHeaders.append("Content-Type", "application/json");
 
-            var raw = JSON.stringify({
-                "EntityValue": data
-            });
+                var raw = JSON.stringify({
+                    "EntityValue": data
+                });
 
-            var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
+                var requestOptions = {
+                    method: 'POST',
+                    headers: myHeaders,
+                    body: raw,
+                    redirect: 'follow'
+                };
 
-            fetch("http://localhost:5000/api/Intelekt/CreateCondition", requestOptions)
-                .then(response => response.json())
-                .then(result => {
-                    let notification = document.getElementById("condition");
-                    if (result.isSuccess) {
-                        notification.innerText = result.message;
-                        notification.style.color = "blue";
-                        document.getElementById("result_of_qiymat").innerText = data;
-                    }
-                    else {
-                        notification.innerText = result.message;
-                        notification.style.color = "red";
-                    }
-                })
-                .catch(error => console.log('error', error));
-
+                fetch("http://localhost:5000/api/Intelekt/CreateCondition", requestOptions)
+                    .then(response => response.json())
+                    .then(result => {
+                        let notification = document.getElementById("condition");
+                        if (result.isSuccess) {
+                            notification.innerText = result.message;
+                            notification.style.color = "blue";
+                            document.getElementById("result_of_qiymat").innerText = data;
+                            document.getElementById("InputForCondition").value = "";
+                        }
+                        else {
+                            notification.innerText = result.message;
+                            notification.style.color = "red";
+                        }
+                    })
+                    .catch(error => console.log('error', error));
+            }
         }
     </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

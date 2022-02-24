@@ -6,19 +6,66 @@
     <link href="bootstrap/bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .bg {
+            animation: slide 3s ease-in-out infinite alternate;
+            background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+            bottom: 0;
+            left: -50%;
+            opacity: .5;
+            position: fixed;
+            right: -50%;
+            top: 0;
+            z-index: -1;
+        }
+
+        .bg2 {
+            animation-direction: alternate-reverse;
+            animation-duration: 4s;
+        }
+
+        .bg3 {
+            animation-duration: 5s;
+        }
+
+        h1 {
+            font-family: monospace;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(-25%);
+            }
+
+            100% {
+                transform: translateX(25%);
+            }
+        }
+    </style>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
     <div class="container mt-5">
-        <div class="row">
-            <table class="table border">
+        <div class="row bg-white">
+            <table class="table border m-0">
                 <thead class="thead-dark">
-                        <tr>
-                            <th>N</th>
-                        </tr>
+                    <tr>
+                        <th>N</th>
+                    </tr>
                 </thead>
                 <tbody id="table_body">
                 </tbody>
             </table>
-            <a class="btn btn-info" href="main.html">Create Situation</a>
         </div>
+        <a class="btn btn-info mt-3" href="main.html">Create Situation</a>
     </div>
     <script>
         getAgreements();
@@ -34,9 +81,17 @@
                     if (result.isSuccess) {
                         let data = [];
                         result.data.map(agreement => {
-                            let text = "";
+                            let text = "<b>Agar</b> ";
+                            let situationCount = agreement.situations.length;
+                            let i = 0;
                             agreement.situations.map(situation => {
-                                text += situation.condition.conditionValue + " " + situation.atribute.atributeName + ", ";
+                                i++;
+                                let rule = situation.atribute.atributeName + " = " + situation.condition.conditionValue;
+                                if (i === situationCount - 1)
+                                    rule += " <b>U Holda</b> ";
+                                else if (i < situationCount - 1)
+                                    rule += " <b>Va</b> ";
+                                text += rule;
                             });
                             data.push(text);
                         });

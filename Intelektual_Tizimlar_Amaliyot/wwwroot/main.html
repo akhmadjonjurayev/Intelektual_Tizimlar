@@ -58,17 +58,17 @@
     <div class="container my-5" >
         <div class="row border bg-white" id="form" style="padding: 25px 0;">
         </div>
-        <button type="button" class="btn btn-success" onclick={CreateRule()} style="margin-top:10px">
+        <button type="button" class="btn btn-success mt-4" onclick={CreateRule()}>
             Saqlash
         </button>
-        <a class="btn btn-info" href="app.html">Table</a>
+        <a class="btn btn-info mt-4" href="app.html">Table</a>
     </div>
 
     <script>
         let inputsData = [];
         let buttonData = [];
         let count = 0;
-        let buttonSeed = `<div class="col-md-1" style="">
+        let buttonSeed = `<div class="col-md-1 mt-3" style="">
                 <button class="btn btn-danger" style="border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;" type="button" onclick="removeElement()">-</button>
                 <button class="btn btn-info" style="border-radius:50%; margin-top:10px; width:30px; height:30px; display:flex; align-items:center; justify-content:center;" type="button" onclick="writeElements()">+</button>
             </div>`;
@@ -195,7 +195,7 @@
                             stringOption.replace('selected', '');
                         if (!item.select.option.disabled)
                             stringOption.replace('selected', '');
-                    var index = `<div class="col-md-2 border rounded bg-light py-3 m-3">
+                    var index = `<div class="col-md-5 border rounded bg-light py-3 m-3">
                                         <label for="${item.label.for}"><h3>${item.label.text}</h3></label>
                                         <select class="${item.select.className}" id="${item.select.id}" onclick="${item.select.onClick}" onchange="${item.select.onChange}">${stringOption}</select>
                                 </div>`;

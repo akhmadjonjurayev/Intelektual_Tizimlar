@@ -138,5 +138,16 @@ namespace Intelektual_Tizimlar_Amaliyot.Service
                 return new ResponceViewModel { Message = ex.Message, IsSuccess = false };
             }
         }
+
+        private Task ForTest()
+        {
+            var persons = new List<Person>();
+            persons.Add(new Person { PersonId = Guid.NewGuid() });
+            persons.Add(new Person { PersonId = Guid.NewGuid() });
+            var order = persons.OrderBy(l => l.Sequence);
+            return Task.CompletedTask;
+
+            var person = new Person();
+        }
     }
 }

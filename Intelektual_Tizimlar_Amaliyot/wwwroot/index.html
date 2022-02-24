@@ -198,6 +198,10 @@
         function getUrl(actionName) {
             let host = window.location.hostname;
             let protocol = window.location.protocol;
+            let port = window.location.port;
+            if (port) {
+                return protocol + "//" + host + ":" + port + "/api/Intelekt/" + actionName;
+            }
             return protocol + "//" + host + "/api/Intelekt/" + actionName;
         }
     </script>

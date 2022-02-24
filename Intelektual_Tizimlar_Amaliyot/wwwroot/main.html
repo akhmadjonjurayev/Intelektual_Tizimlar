@@ -67,6 +67,8 @@
     <script>
         let inputsData = [];
         let buttonData = [];
+        let attributesData = [];
+        let conditionsData = [];
         let count = 0;
         let buttonSeed = `<div class="col-md-1 mt-3" style="">
                 <button class="btn btn-danger" style="border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center;" type="button" onclick="removeElement()">-</button>
@@ -92,23 +94,24 @@
             let select = document.getElementById(atributeId);
             let countChild = select.childElementCount;
             if (countChild == 1) {
-                var requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                };
-                fetch(getUrl("GetAtributes"), requestOptions)
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.isSuccess) {
-                            result.data.map(l => {
-                                var option = document.createElement("option");
-                                option.value = l.atributeId;
-                                option.text = l.atributeName;
-                                select.appendChild(option);
-                            });
-                        }
-                    })
-                    .catch(error => console.log('error', error));
+                if (attributesData.length === 0) {
+                    var requestOptions = {
+                        method: 'GET',
+                        redirect: 'follow'
+                    };
+                    fetch(getUrl("GetAtributes"), requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.isSuccess) {
+                                addAtributeToSelect(select, result.data);
+                                attributesData = result.data;
+                            }
+                        })
+                        .catch(error => console.log('error', error));
+                }
+                else {
+                    addAtributeToSelect(select, attributesData);
+                }
             }
         }
 
@@ -116,23 +119,25 @@
             let select = document.getElementById(qiymatId);
             let countChild = select.childElementCount;
             if (countChild == 1) {
-                var requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                };
-                fetch(getUrl("GetConditions"), requestOptions)
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.isSuccess) {
-                            result.data.map(l => {
-                                var option = document.createElement("option");
-                                option.value = l.conditionId;
-                                option.text = l.conditionValue;
-                                select.appendChild(option);
-                            });
-                        }
-                    })
-                    .catch(error => console.log('error', error));
+                if (conditionsData.length === 0) {
+                    var requestOptions = {
+                        method: 'GET',
+                        redirect: 'follow'
+                    };
+                    fetch(getUrl("GetConditions"), requestOptions)
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.isSuccess) {
+                                AddConditionToSelect(select, result.data);
+                                conditionsData = result.data;
+                            }
+                        })
+                        .catch(error => console.log('error', error));
+                }
+                else {
+                    AddConditionToSelect(select, conditionsData);
+                }
+                
             }
         }
 
@@ -224,9 +229,15 @@
             for (let i = 1; i <= count; i++)
             {
                 let result = i == count ? true : false;
+                let conId = document.getElementById(`qiymat${i}`).value;
+                let atrId = document.getElementById(`atribute${i}`).value;
+                if (conId === 'check' || atrId === 'check') {
+                    alert('any select not selected');
+                    return;
+                }
                 data.push({
-                    'atributeId': document.getElementById(`atribute${i}`).value,
-                    'conditionId': document.getElementById(`qiymat${i}`).value,
+                    'atributeId': atrId,
+                    'conditionId': conId,
                     'result': result
                 });
             }
@@ -246,9 +257,9 @@
                 .then(response => response.json())
                 .then(result => {
                     if (result.isSuccess) {
-                        alert('how are you man');
+                        alert(result.message);
                     }
-                    else alert('bad men');
+                    else alert(result.message);
                 })
                 .catch(error => console.log('error', error));
         }
@@ -256,7 +267,29 @@
         function getUrl(actionName) {
             let host = window.location.hostname;
             let protocol = window.location.protocol;
+            let port = window.location.port;
+            if (port) {
+                return protocol + "//" + host + ":" + port + "/api/Intelekt/" + actionName;
+            }
             return protocol + "//" + host + "/api/Intelekt/" + actionName;
+        }
+
+        function addAtributeToSelect(select, data) {
+            data.map(l => {
+                var option = document.createElement("option");
+                option.value = l.atributeId;
+                option.text = l.atributeName;
+                select.appendChild(option);
+            });
+        }
+
+        function AddConditionToSelect(select, data) {
+            data.map(l => {
+                var option = document.createElement("option");
+                option.value = l.conditionId;
+                option.text = l.conditionValue;
+                select.appendChild(option);
+            });
         }
     </script>
 </body>

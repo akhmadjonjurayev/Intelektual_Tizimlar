@@ -20,7 +20,8 @@ namespace Intelektual_Tizimlar_Amaliyot
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSetting("https_port", "5001")
+                    .UseStartup<Startup>();
                 });
     }
 }
